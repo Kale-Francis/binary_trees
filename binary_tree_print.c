@@ -1,43 +1,26 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "binary_trees.h"
 
-/**
- * print_tree - Recursive function to print the binary tree
- * @tree: Pointer to the root of the tree
- * @level: Current level in the tree
- * @is_left: Whether the node is a left child
- * @spaces: The amount of spaces before printing the node
- */
-static void print_tree(const binary_tree_t *tree, int level, int is_left, int spaces)
-{
-    if (tree == NULL)
-        return;
-
-    print_tree(tree->right, level + 1, 0, spaces + 8);
-
-    printf("%*s", spaces, "");
-    if (is_left)
-        printf(".--(");
-    else
-        printf(".--(");
-    printf("%03d)", tree->n);
-    if (is_left)
-        printf("--.");
-    else
-        printf("--.");
-    printf("\n");
-
-    print_tree(tree->left, level + 1, 1, spaces + 8);
-}
+/* Function prototype for printing binary trees */
+void binary_tree_print(const binary_tree_t *tree);
 
 /**
  * binary_tree_print - Prints a binary tree
- * @tree: Pointer to the root of the tree
+ * @tree: Pointer to the root node of the tree to print
  */
 void binary_tree_print(const binary_tree_t *tree)
 {
+    /* Example printing function for binary trees, customize as needed */
     if (tree == NULL)
         return;
-    print_tree(tree, 0, 0, 0);
+
+    if (tree->left || tree->right)
+        printf(".--(%03d)--.\n", tree->n);
+    else
+        printf("(%03d)\n", tree->n);
+
+    if (tree->left != NULL)
+        printf("(%03d)", tree->left->n);
+    if (tree->right != NULL)
+        printf("     (%03d)\n", tree->right->n);
 }
