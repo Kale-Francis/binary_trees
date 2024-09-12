@@ -1,15 +1,23 @@
-#include <stdio.h>
 #include "binary_trees.h"
+#include <stdio.h>
 
+/* Utility function to print binary tree in 2D */
 void binary_tree_print(const binary_tree_t *tree)
 {
-    if (tree == NULL)
+    if (!tree)
         return;
 
-    printf("  .--(%03d)--.\n", tree->n);
+    if (tree->right)
+    {
+        binary_tree_print(tree->right);
+        printf("    ");
+    }
 
-    if (tree->left != NULL)
-        printf("(%03d)--. ", tree->left->n);
-    if (tree->right != NULL)
-        printf("      (%03d)--.\n", tree->right->n);
+    printf("(%03d)\n", tree->n);
+
+    if (tree->left)
+    {
+        printf("    ");
+        binary_tree_print(tree->left);
+    }
 }
