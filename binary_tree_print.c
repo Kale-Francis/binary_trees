@@ -20,7 +20,7 @@ void binary_tree_print(const binary_tree_t *tree)
         printf("(%03d)\n", tree->n);
 
     if (tree->left != NULL)
-        printf("(%03d)", tree->left->n);
+        printf("(%03d)--. ", tree->left->n);
     if (tree->right != NULL)
-        printf("     (%03d)\n", tree->right->n);
+        printf("      (%03d)--.\n", tree->right->n);
 }
