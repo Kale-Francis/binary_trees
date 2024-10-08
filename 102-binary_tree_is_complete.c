@@ -1,41 +1,28 @@
 #include "binary_trees.h"
+#include <stdbool.h>
 
-/**
- * binary_tree_is_complete - Checks if a binary tree is complete
- * @tree: Pointer to the root of the tree to check
- *
- * Return: 1 if the tree is complete, 0 otherwise
- */
-int binary_tree_is_complete(const binary_tree_t *tree)
+size_t count_nodes(const binary_tree_t *tree)
 {
-    if (tree == NULL)
-        return (0);
-
-    /* We can use a level-order traversal to check completeness */
-    size_t index = 0;
-    size_t nodes = binary_tree_size(tree);
-
-    return (is_complete(tree, index, nodes));
+    if (!tree)
+        return 0;
+    return 1 + count_nodes(tree->left) + count_nodes(tree->right);
 }
 
-/**
- * is_complete - Helper function to check completeness using index
- * @tree: Pointer to the root of the tree
- * @index: The current node index
- * @nodes: The total number of nodes in the tree
- *
- * Return: 1 if the tree is complete, 0 otherwise
- */
-int is_complete(const binary_tree_t *tree, size_t index, size_t nodes)
+bool is_complete(const binary_tree_t *tree, size_t index, size_t number_nodes)
 {
-    if (tree == NULL)
-        return (1);
+    if (!tree)
+        return true;
+    if (index >= number_nodes)
+        return false;
+    return is_complete(tree->left, 2 * index + 1, number_nodes) &&
+           is_complete(tree->right, 2 * index + 2, number_nodes);
+}
 
-    /* If index assigned to the node is more than the number of nodes, it's not complete */
-    if (index >= nodes)
-        return (0);
-
-    return (is_complete(tree->left, 2 * index + 1, nodes) &&
-            is_complete(tree->right, 2 * index + 2, nodes));
+int binary_tree_is_complete(const binary_tree_t *tree)
+{
+    if (!tree)
+        return 0;
+    size_t node_count = count_nodes(tree);
+    return is_complete(tree, 0, node_count);
 }
 
